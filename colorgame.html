@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="theme-color" content="#376AA0">
+  <meta name="msapplication-navbutton-color" content="#376AA0">
+  <meta name="apple-mobile-web-app-status-bar-style" content="#376AA0">
+  <title>The Great RGB Colour Guessing Game</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+    integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+  <link rel="stylesheet" href="colorgame.css">
+</head>
+
+<body>
+  <div id="hideAll">
+    <div id="hideAll" class="d-flex justify-content-center align-items-center">
+      <div class="spinner-grow text-danger" style="width: 10rem; height: 10rem;" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript">
+    document.getElementById("hideAll").style.display = "block";
+  </script>
+  <div class="header text-center">
+    <h1>THE GREAT</h1>
+    <h2 class="d-inline"></h2>
+    <h1>COLOR GAME</h1>
+    <iframe src="audio/silence.mp3" allow="autoplay" type="audio/mp3" id="audio" style="display:none"></iframe>
+    <audio id="bgm" src="audio/bgm.mp3" type="audio/mp3" autoplay loop></audio>
+    <audio id="correct" src="audio/correct.mp3" type="audio/mp3">No Browser support for audio</audio>
+    <audio id="wrong" src="audio/wrong.mp3" type="audio/mp3">No Browser support for audio</audio>
+    <audio id="newGame" src="audio/new.mp3" type="audio/mp3">No Browser support for audio</audio>
+    <audio id="end" src="audio/end.mp3" type="audio/mp3">No Browser support for audio</audio>
+    <audio id="cheers" src="audio/cheers.mp3" type="audio/mp3">No Browser support for audio</audio>
+  </div>
+  <div class="my-navbar">
+    <ul>
+      <div class="my-navbar-text">
+        <li class="hover-effect">New Game</li>
+      </div>
+      <div class="my-navbar-text" data-toggle="modal" data-target="#exampleModal">
+        <li class="hover-effect">How to?</li>
+      </div>
+      <div class="my-navbar-text">
+        <li><a target="_blank"
+            href="https://www.google.com/search?q=what+is+rgb&rlz=1C1CHZL_enIN808IN808&oq=what+is+RGB&aqs=chrome.0.0l6.2502j0j1&sourceid=chrome&ie=UTF-8">RGB?</a>
+        </li>
+      </div>
+      <div class="my-navbar-level-1">
+        <li data-toggle="modal" data-target="#difficulty">EASY</li>
+      </div>
+      <div class="my-navbar-level-2">
+        <li class="hard" data-toggle="modal">HARD</li>
+      </div>
+    </ul>
+  </div>
+
+  <!-- modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">How to Play?</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body bg-black">
+          <div class="mb-3 text-center">
+            <img src="rgb.png" class="img-fluid" alt="rgb">
+          </div>
+          <p>The RGB color model is an additive color model in which red, green and blue light are added together in
+            various ways to reproduce a broad array of colors (16 million colours). The name of the model comes from the
+            initials of the three
+            additive primary
+            colors,
+            red, green, and blue.</p>
+          <p>Every time you click on <em>New Game</em>, a new RGB colour code is randomly generated and displayed just
+            above the navbar. Every RGB code is assosciated with 3 numbers that range between 0 and 255. Depending on
+            the level of difficulty
+            you choose, you will also see 3/6 colours on the page. Only one
+            among these 3/6 colours correspond to the RGB colour code displayed on the page. Your task is to correctly
+            identify the colour that corresponds to the displayed RGB colour code. You also have 3 lives - make the most
+            out of it.</p>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Modal -->
+  <div class="modal fade" id="difficulty" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header bg-info">
+          <h5 class="modal-title" id="exampleModalLabel">Warning!</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body bg-black">
+          <p>A game is in progress. If you change the difficulty level now, your progress will be lost and a new game
+            will be launched. Are you sure you want to continue?</p>
+        </div>
+        <div class="modal-footer">
+          <button id="reject" type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <button id="agree" type="button" class="btn btn-primary">Continue</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="my-container">
+    <div id="crux">
+      <div class="text-left">
+        <h3 id="score" class="d-inline">Score : 0</h3>
+      </div>
+      <div id="icons" class="text-center">
+        <i class="fas fa-heart"></i>
+        <i class="fas fa-heart"></i>
+        <i class="fas fa-heart"></i>
+      </div>
+      <div class="text-right">
+        <h3 id="highScore" class="d-inline">Hi-Score : 0</h3>
+      </div>
+      <h1 id="message" class="mt-4">Play!</h1>
+      <div class="square"></div>
+      <div class="square"></div>
+      <div class="square"></div>
+      <div class="square"></div>
+      <div class="square"></div>
+      <div class="square"></div>
+    </div>
+  </div>
+  <div id="game-over" class="text-center d-none">
+    <div class="score-background my-container">
+      <h4>Game Over!</h4>
+      <h5 id="score-display"></h5>
+      <h5 id="highscore-display"></h5>
+      <button id="play-again" type="button" class="btn btn-light">Play Again?</button>
+    </div>
+  </div>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+  <script src="colorgame.js" charset="utf-8"></script>
+</body>
+
+</html>
